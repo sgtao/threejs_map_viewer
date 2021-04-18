@@ -1,2 +1,5 @@
 README.txt
 01_reference
+.sass-cache
+*/.sass-cache
+*/*/.sass-cache
