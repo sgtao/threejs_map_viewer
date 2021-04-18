@@ -17,7 +17,7 @@ function init() {
   container.appendChild(_canvas);
 
   // サイズを指定
-  const width = window.innerWidth / 2;
+  const width = window.innerWidth;
   const height = window.innerHeight / 2;
 
   // レンダラーを作成
@@ -33,7 +33,7 @@ function init() {
   camera.position.set(-100, 150, 500);
   camera.lookAt(new THREE.Vector3(0, 0, 0));
   // カメラコントローラーを作成
-  controls = new OrbitControls(camera, renderer.domElement);
+  // controls = new OrbitControls(camera, renderer.domElement);
 
 
   // 地面を作成
@@ -80,13 +80,27 @@ function init() {
   // 毎フレーム時に実行されるループイベントです
   function tick() {
     // group.rotation.x += 0.01;
-    group.rotation.y += 0.01;
+    // group.rotation.y += 0.01;
     // group.rotation.z += 0.01;
 
     // meshLists.forEach( mesh => {
     //   mesh.rotation.y += 0.02;
     // });
-    
+    // update camera position
+    let _tile_w = tilemap.numX * tilemap.tSize;
+    // let _tile_h = tilemap.numY * tilemap.tSize;
+    let _cam_px = game.player.pos.y;
+    let _cam_py = 50;
+    let _cam_pz = _tile_w - game.player.pos.x;
+    let _cam_vx = _cam_px + 100 * sin(game.player.angle);
+    let _cam_vy = 0;
+    let _cam_vz = _cam_pz - 100 * cos(game.player.angle); 
+    camera.position.set(_cam_px, _cam_py, _cam_pz);
+    camera.lookAt(new THREE.Vector3(_cam_vx, _cam_vy, _cam_vz));
+
+    // camera.position.set(-100, 200, 500);
+    // camera.lookAt(new THREE.Vector3(0, 0, 0));
+
     // レンダリング
     renderer.render(scene, camera);
     requestAnimationFrame(tick);
