@@ -1,4 +1,5 @@
 'use strict';
+// import { three_map_init } from './23_object_group.js';
 
 // グローバル変数 Global variables
 let game;
@@ -17,13 +18,13 @@ async function load_tilemap(filename) {
     tilemap.textSet(textContent);
     tilemap.show();
     // game.init(tilemap);
-    init(tilemap);
+    sketch_init(tilemap);
   }).catch(function (err) {
     console.log('Fetch problem: ' + err.message);
   });
 }
 
-function init(tilemap) {
+function sketch_init(tilemap) {
   game.reset();
   // tilemapの上書き
   game.level = new Level();
@@ -34,6 +35,8 @@ function init(tilemap) {
     tilemap.tSize // タイルの大きさ（px）
   );
   game.level.addWorldEdges();
+  // three.jsを起動する
+  three_tilemap_init();
 }
 
 // 読み込み時の処理（p5js）
