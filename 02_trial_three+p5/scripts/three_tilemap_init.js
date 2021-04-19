@@ -27,8 +27,8 @@ function three_tilemap_init() {
 
   // カメラを作成
   const camera = new THREE.PerspectiveCamera(45, width / height);
-  camera.position.set(-100, 150, 500);
-  camera.lookAt(new THREE.Vector3(0, 150, 0));
+  camera.position.set(0, 0, 0);
+  camera.lookAt(new THREE.Vector3(150, 150, 0));
 
 
   // 地面を作成
@@ -59,22 +59,31 @@ function three_tilemap_init() {
 
     // 物体(Geometry, Material)を定義
     const material = new THREE.MeshNormalMaterial();
-    const geometry = new THREE.SphereGeometry(tSize / 2, tSize / 2, tSize / 2);
+    const geometry = new THREE.BoxGeometry(tSize, 50, tSize );
 
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
         let tile = game.level.tileAt(x, y);
         if (tile === 'O' || tile === 'X') {
-          console.log(` at (x,y) = (${x},${y}) : ${tile} (tileSize = ${tSize  })`);
+          // console.log(` at (x,y) = (${x},${y}) : ${tile} (tileSize = ${tSize  })`);
           let mesh = new THREE.Mesh(geometry, material);
           mesh.position.set(
-            y * tSize - (tSize/2),          // x軸方向の位置
-            tSize / 2,                  // y軸方向の位置
-            (width - x) * tSize - (tSize/2) // z軸方向の位置
+            y * tSize - (tSize / 2),          // x軸方向の位置
+            tSize / 2,                        // y軸方向の位置
+            (width - x) * tSize - (tSize / 2) // z軸方向の位置
           );
           // グループに追加する
           group.add(mesh);
           meshLists.push(mesh);
+        } else if (tile === 'S') {
+          console.log(` at (x,y) = (${x},${y}) : ${tile} (tileSize = ${tSize  })`);
+          // カメラ位置のセット
+          camera.position.set(
+            y * tSize - (tSize / 2),          // x軸方向の位置
+            20,                               // y軸方向の位置
+            (width - x) * tSize - (tSize / 2) // z軸方向の位置
+          );
+          camera.lookAt(new THREE.Vector3(0, 200, 0));
         }
       }
     }
@@ -116,7 +125,7 @@ function three_tilemap_init() {
     let _tile_w = tilemap.numX * tilemap.tSize;
     // let _tile_h = tilemap.numY * tilemap.tSize;
     let _cam_px = game.player.pos.y;
-    let _cam_py = 30;
+    let _cam_py = 20;
     let _cam_pz = _tile_w - game.player.pos.x;
     let _cam_vx = _cam_px + 100 * sin(game.player.angle);
     let _cam_vy = 100 * sin(game.player.Zangle);

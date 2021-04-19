@@ -280,8 +280,8 @@ class Game {
     this.util = new Util();
   }
   reset() {
-    this.player.pos = new Vec2(118, 201);
-    this.player.angle = -PI / 2;
+    this.player.pos = new Vec2(0, 0);
+    this.player.angle = PI / 2;
   }
   init(tilemap) {
     this.reset();
