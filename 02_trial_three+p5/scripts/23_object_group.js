@@ -93,7 +93,7 @@ function init() {
     let _cam_py = 50;
     let _cam_pz = _tile_w - game.player.pos.x;
     let _cam_vx = _cam_px + 100 * sin(game.player.angle);
-    let _cam_vy = 0;
+    let _cam_vy = 100 * sin(game.player.Zangle);
     let _cam_vz = _cam_pz - 100 * cos(game.player.angle); 
     camera.position.set(_cam_px, _cam_py, _cam_pz);
     camera.lookAt(new THREE.Vector3(_cam_vx, _cam_vy, _cam_vz));

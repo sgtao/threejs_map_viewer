@@ -97,6 +97,7 @@ class Player {
   constructor() {
     this.pos = new Vec2(0, 0);
     this.angle = 0;
+    this.Zangle = 0;
   }
   draw_player() {
     push();
@@ -309,6 +310,8 @@ class Game {
       // 視点を回転
       if (keyIsDown(68)) this.player.angle += PI / 180; // Dキー
       if (keyIsDown(65)) this.player.angle -= PI / 180; // Aキー
+      if (keyIsDown(87)) this.player.Zangle += PI / 180; // Wキー
+      if (keyIsDown(83)) this.player.Zangle -= PI / 180; // Sキー
 
       // 移動（上下左右）
       if (keyIsDown(37)) this.player.pos.x -= 1; // 左キー
@@ -336,6 +339,14 @@ class Game {
         this.player.pos.x = _pre_pos.x;
         this.player.pos.y = _pre_pos.y;
       }
+    }
+
+    // 視野角の回転を補正・制限
+    {
+      this.player.angle = this.player.angle % (2 * PI);
+      let _Zangle = this.player.Zangle;
+      if (_Zangle <= 0) this.player.Zangle = 0;
+      if (_Zangle >= PI / 2) this.player.Zangle = PI / 2;
     }
   }
   draw_3Dview_Ray(vpos = new Vec2(305, 40)) {

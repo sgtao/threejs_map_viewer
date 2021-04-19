@@ -63,7 +63,7 @@ function draw() {
   // game.draw_3Dview_Ray(view_pos);
 
   // ----- テキストを描画
-  game.util.draw_msg('マウスドラッグ／カーソルで移動、\nA,Dキーで回転します');
+  game.util.draw_msg('マウスドラッグ／カーソルで移動、\nA,Dキーで横回転\nW,Sキーで縦回転します');
  
 }
 
