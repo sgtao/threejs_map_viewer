@@ -43,7 +43,10 @@ function three_tilemap_init() {
     }
   }
 
-
+  // 環境光源を作成
+  // new THREE.AmbientLight(色, 光の強さ)
+  const light = new THREE.AmbientLight(0xFFFFFF, 1.0);
+  scene.add(light);
 
   // グループを作る
   const group = new THREE.Group();
@@ -58,18 +61,23 @@ function three_tilemap_init() {
     let tSize   = game.level.tileSize;
 
     // 物体(Geometry, Material)を定義
-    const material = new THREE.MeshNormalMaterial();
-    const geometry = new THREE.BoxGeometry(tSize, 50, tSize );
+    // const geometryO = new THREE.BoxGeometry(tSize, 20, tSize );
+    // const geometryX = new THREE.BoxGeometry(tSize, 20, tSize );
+    const geometryO = new THREE.BoxGeometry(tSize, 20, tSize);
+    const geometryX = new THREE.ConeGeometry(tSize / 2, 20, 32);
+    const materialO = new THREE.MeshNormalMaterial();
+    const materialX = new THREE.MeshNormalMaterial();
 
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
         let tile = game.level.tileAt(x, y);
         if (tile === 'O' || tile === 'X') {
           // console.log(` at (x,y) = (${x},${y}) : ${tile} (tileSize = ${tSize  })`);
-          let mesh = new THREE.Mesh(geometry, material);
+          let mesh = (tile==='O') ? new THREE.Mesh(geometryO, materialO) : 
+                                    new THREE.Mesh(geometryX, materialX); 
           mesh.position.set(
             y * tSize - (tSize / 2),          // x軸方向の位置
-            tSize / 2,                        // y軸方向の位置
+            15,                        // y軸方向の位置
             (width - x) * tSize - (tSize / 2) // z軸方向の位置
           );
           // グループに追加する
@@ -80,7 +88,7 @@ function three_tilemap_init() {
           // カメラ位置のセット
           camera.position.set(
             y * tSize - (tSize / 2),          // x軸方向の位置
-            20,                               // y軸方向の位置
+            10,                               // y軸方向の位置
             (width - x) * tSize - (tSize / 2) // z軸方向の位置
           );
           camera.lookAt(new THREE.Vector3(0, 200, 0));
