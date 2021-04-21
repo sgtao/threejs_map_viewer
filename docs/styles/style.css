@@ -9,6 +9,8 @@ header {
   z-index: 100; }
   header h1 {
     color: #eee; }
+  header .abstract {
+    color: #fff; }
 
 #container {
   height: 40vh;
